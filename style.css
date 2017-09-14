@@ -1,0 +1,239 @@
+body{
+  background-color:#566270;
+  font-family: 'Open Sans', sans-serif;
+}
+#TrainingInfo{
+  margin: 0 auto;
+  position: fixed;
+  color: #fff;
+}
+#generate {
+  display: block;
+  font-size: 16px;
+  text-align: center;
+  line-height: 44px;
+  text-decoration: none;
+  color: white;
+  background-color: #CC4331;
+  border-radius: 4px;
+  position: absolute;
+  top: 13%;
+  left: 10%;
+  width: 124px;
+  height: 44px;
+  text-shadow: 0 -1px -1px #af3a2a;
+  -moz-box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+#generate:hover {
+  background-color: #d25544;
+  text-shadow: 0 -1px -1px #c4402f;
+  -moz-box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+}
+#generate:active {
+  margin-top: -18px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+#see-results{
+  font-size: 16px;
+  text-align: center;
+  line-height: 44px;
+  text-decoration: none;
+  color: white;
+  background-color: #CC4331;
+  border-radius: 4px;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 124px;
+  height: 44px;
+  text-shadow: 0 -1px -1px #af3a2a;
+  -moz-box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 0 #af3a2a, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+#see-results {
+  background-color: #d25544;
+  text-shadow: 0 -1px -1px #c4402f;
+  -moz-box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 0 #c4402f, 0 5px 5px 1px rgba(0, 0, 0, 0.4);
+}
+#see-results:active {
+  margin-top: -18px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+
+#graph-container {
+      background: #fff;
+      height: 600px;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      border-radius :4px;
+      margin: 0 auto;
+      box-shadow: 0 4px 5px #222;
+    }
+
+fieldset.question {
+  border:0;
+  list-style:none;
+	margin: 0;
+	float: 	left;
+	padding: .7em 0 0;
+	width: 100%;
+	text-align: center;
+  position: relative;
+}
+fieldset.question label {
+  display:block;
+	height: 2.2em;
+	width: 2.2em;
+	border-radius: 50px;
+	cursor: pointer;
+	border: 0;
+	box-shadow: 0 3px 0 0 #222;
+	display: inline-block;
+	margin: 0 5px ;
+}
+fieldset.question label.red {
+  background: red;
+}
+fieldset.question label.blue {
+  background: blue;
+}
+fieldset.question label.springgreen {
+  background: springgreen;
+}
+fieldset.question label.yellow {
+  background: yellow;
+}
+fieldset.question label.black {
+  background: black;
+}
+fieldset.question label.violet {
+  background: blueviolet;
+}
+fieldset.question label.brown {
+  background: brown;
+}
+fieldset.question label.chocolate {
+  background: chocolate;
+}
+fieldset.question label.cyan {
+  background: cyan;
+}
+fieldset.question label.orange {
+  background: orange;
+}
+fieldset.question label.pink {
+  background: deeppink;
+}
+fieldset.question label.darkgreen {
+  background: darkgreen;
+}
+fieldset.question label.gray {
+  background: gray;
+}
+fieldset.question label.goldenrod {
+  background: goldenrod;
+}
+fieldset.question label.orchid {
+  background: orchid;
+}
+fieldset.question label.purple {
+  background: purple;
+}
+
+
+fieldset.question input:checked + label {
+  height: 2em;
+	width: 2em;
+  border: 0.2em solid #fff;
+  color: #fff;
+}
+fieldset.question input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.btn-group{
+  visibility: hidden;
+  text-align: center;
+}
+
+label input[type="checkbox"] ~ i.btn-square{
+    color: #c8c8c8;    display: inline;
+}
+label input[type="checkbox"] ~ i.btn-check{
+    display: none;
+}
+label input[type="checkbox"]:checked ~ i.btn-square{
+    display: none;
+}
+label input[type="checkbox"]:checked ~ i.btn-check{
+    color: #7AA3CC;    display: inline;
+}
+label:hover input[type="checkbox"] ~ i.fa {
+color: #7AA3CC;
+}
+
+
+
+div[data-toggle="buttons"] label {
+display: inline-block;
+padding: 6px 12px;
+margin-bottom: 0;
+font-size: 24px;
+font-weight: bold;
+line-height: 2em;
+text-align: left;
+white-space: nowrap;
+vertical-align: top;
+cursor: pointer;
+background-color: none;
+border: 0px solid 
+#c8c8c8;
+border-radius: 3px;
+color: #c8c8c8;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+
+div[data-toggle="buttons"] label:hover {
+color: #7AA3CC;
+}
+
+div[data-toggle="buttons"] label:active, div[data-toggle="buttons"] label.active {
+-webkit-box-shadow: none;
+box-shadow: none;
+}
+
+

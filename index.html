@@ -1,0 +1,717 @@
+<!DOCTYPE HTML>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>OPF Web</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="../src/sigma.core.js"></script>
+    <script src="../src/conrad.js"></script>
+    <script src="../src/utils/sigma.utils.js"></script>
+    <script src="../src/utils/sigma.polyfills.js"></script>
+    <script src="../src/sigma.settings.js"></script>
+    <script src="../src/classes/sigma.classes.dispatcher.js"></script>
+    <script src="../src/classes/sigma.classes.configurable.js"></script>
+    <script src="../src/classes/sigma.classes.graph.js"></script>
+    <script src="../src/classes/sigma.classes.camera.js"></script>
+    <script src="../src/classes/sigma.classes.quad.js"></script>
+    <script src="../src/classes/sigma.classes.edgequad.js"></script>
+    <script src="../src/captors/sigma.captors.mouse.js"></script>
+    <script src="../src/captors/sigma.captors.touch.js"></script>
+    <script src="../src/renderers/sigma.renderers.canvas.js"></script>
+    <script src="../src/renderers/sigma.renderers.webgl.js"></script>
+    <script src="../src/renderers/sigma.renderers.svg.js"></script>
+    <script src="../src/renderers/sigma.renderers.def.js"></script>
+    <script src="../src/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+    <script src="../src/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+    <script src="../src/renderers/webgl/sigma.webgl.edges.def.js"></script>
+    <script src="../src/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+    <script src="../src/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+    <script src="../src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+    <script src="../src/renderers/svg/sigma.svg.utils.js"></script>
+    <script src="../src/renderers/svg/sigma.svg.nodes.def.js"></script>
+    <script src="../src/renderers/svg/sigma.svg.edges.def.js"></script>
+    <script src="../src/renderers/svg/sigma.svg.edges.curve.js"></script>
+    <script src="../src/renderers/svg/sigma.svg.labels.def.js"></script>
+    <script src="../src/renderers/svg/sigma.svg.hovers.def.js"></script>
+    <script src="../src/middlewares/sigma.middlewares.rescale.js"></script>
+    <script src="../src/middlewares/sigma.middlewares.copy.js"></script>
+    <script src="../src/misc/sigma.misc.animation.js"></script>
+    <script src="../src/misc/sigma.misc.bindEvents.js"></script>
+    <script src="../src/misc/sigma.misc.bindDOMEvents.js"></script>
+    <script src="../src/misc/sigma.misc.drawHovers.js"></script>
+    <script src="./jquery-3.2.1.slim.min.js"></script>
+    <script src="libraries/socket.io.js"></script>
+</head>
+<body>
+ <div id="container">
+   <div id="TrainingInfo">
+        <h3 id = "Title" >Training % <span id="min-degree-val"></span></h3>
+          <input  type="range" name="InputTraining" id="InputTrainingId" value="0" min="0" max="100" oninput="OutputTrainingId.value = InputTrainingId.value">
+          <output name="OutputTraining" id="OutputTrainingId">0</output>
+    </div>
+    <a href="#" class="button" id="generate">GENERATE</a>
+    <a href="#" style="display:none;" class="button" id="see-results">SEE RESULTS</a>
+    <div id="graph-container"></div>
+    <fieldset class="question" id="question">
+            <input type="radio" name="radio" value="black" id="black" checked><label for="black" class="black"></label>
+            <input type="radio" name="radio" value="gray" id="gray"><label for="gray" class="gray"></label>
+            <input type="radio" name="radio" value="red" id="red"><label for="red" class="red"></label> 
+            <input type="radio" name="radio" value="blue" id="blue"><label for="blue" class="blue"></label>
+            <input type="radio" name="radio" value="springgreen" id="springgreen"><label for="springgreen" class="springgreen"></label>
+            <input type="radio" name="radio" value="yellow" id="yellow"><label for="yellow" class="yellow"></label>
+            <input type="radio" name="radio" value="blueviolet" id="violet"><label for="violet" class="violet"></label>
+            <input type="radio" name="radio" value="brown" id="brown"><label for="brown" class="brown"></label>
+            <input type="radio" name="radio" value="chocolate" id="chocolate"><label for="chocolate" class="chocolate"></label>
+            <input type="radio" name="radio" value="cyan" id="cyan"><label for="cyan" class="cyan"></label>
+            <input type="radio" name="radio" value="orange" id="orange"><label for="orange" class="orange"></label>
+            <input type="radio" name="radio" value="deeppink" id="pink"><label for="pink" class="pink"></label>
+            <input type="radio" name="radio" value="darkgreen" id="darkgreen"><label for="darkgreen" class="darkgreen"></label>
+            <input type="radio" name="radio" value="goldenrod" id="goldenrod"><label for="goldenrod" class="goldenrod"></label>
+            <input type="radio" name="radio" value="orchid" id="orchid"><label for="orchid" class="orchid"></label>
+            <input type="radio" name="radio" value="purple" id="purple"><label for="purple" class="purple"></label>
+	    </fieldset>
+      </div>
+  <div class="btn-group" data-toggle="buttons" id="btn-group">
+    <label class="btn">
+      <input type="checkbox" name='btn1' id="btn1" checked><i class="btn-square"></i><i class="btn-check"></i><span> Training</span>
+    </label>
+    <label class="btn">
+      <input type="checkbox" name='btn2' id="btn2" checked><i class="btn-square"></i><i class="btn-check"></i><span> Testing</span>
+    </label>
+  </div>
+
+<script>
+(function() {
+  'use strict';
+  var s,
+      socket,
+      c,
+      dom,
+      disc,
+      nId = 0,
+      eId = 0,
+      radius = 50,
+      mouseX,
+      mouseY,
+      spaceMode = false,
+      wheelRatio = 1.1,
+      generate,
+      nodeRadius = 5,
+      inertia = 0.8,
+      springForce = 0.01,
+      springLength = 50,
+      maxDisplacement = 15,
+      gravity = 1.5,
+      array_color = [],
+      n_classes = 1,
+      count_class = [];
+
+      
+      socket = io.connect('http://localhost:3000');
+      
+      
+      if (!Array.prototype.includes) {
+      Object.defineProperty(Array.prototype, 'includes', {
+        value: function(searchElement, fromIndex) {
+
+        // 1. Let O be ? ToObject(this value).
+        if (this == null) {
+          throw new TypeError('"this" is null or not defined');
+        }
+
+        var o = Object(this);
+
+        // 2. Let len be ? ToLength(? Get(O, "length")).
+        var len = o.length >>> 0;
+
+        // 3. If len is 0, return false.
+        if (len === 0) {
+          return false;
+        }
+
+        // 4. Let n be ? ToInteger(fromIndex).
+        //    (If fromIndex is undefined, this step produces the value 0.)
+        var n = fromIndex | 0;
+
+        // 5. If n ≥ 0, then
+        //  a. Let k be n.
+        // 6. Else n < 0,
+        //  a. Let k be len + n.
+        //  b. If k < 0, let k be 0.
+        var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+        function sameValueZero(x, y) {
+          return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+        }
+
+        // 7. Repeat, while k < len
+        while (k < len) {
+          // a. Let elementK be the result of ? Get(O, ! ToString(k)).
+          // b. If SameValueZero(searchElement, elementK) is true, return true.
+          // c. Increase k by 1. 
+          if (sameValueZero(o[k], searchElement)) {
+          return true;
+          }
+          k++;
+        }
+
+			// 8. Return false
+			return false;
+			}
+		});
+		}
+
+  
+
+
+
+
+  /**
+   * CUSTOM RENDERERS:
+   * *****************
+   */
+  sigma.canvas.edges.goo = function(e, s, t, ctx, settings) {
+    
+    /*var color = e.color,
+        p = settings('prefix') || '',
+        edgeColor = settings('edgeColor'),
+        defaultNodeColor = settings('defaultNodeColor'),
+        defaultEdgeColor = settings('defaultEdgeColor'),
+        v,
+        d,
+        p1 = 5 / 6,
+        p2 = 1 / 6;
+
+    if (!color)
+      switch (edgeColor) {
+        case 'source':
+          color = s.color || defaultNodeColor;
+          break;
+        case 'target':
+          color = t.color || defaultNodeColor;
+          break;
+        default:
+          color = defaultEdgeColor;
+          break;
+      }*/
+
+    d = Math.sqrt(Math.pow(t[p + 'x'] - s[p + 'x'], 2) + Math.pow(t[p + 'y'] - s[p + 'y'], 2));
+    v = {
+      x: (t[p + 'x'] - s[p + 'x']) / d,
+      y: (t[p + 'y'] - s[p + 'y']) / d
+    };
+
+    //ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(
+      s[p + 'x'] + v.y * s[p + 'size'],
+      s[p + 'y'] - v.x * s[p + 'size']
+    );
+    ctx.bezierCurveTo(
+      s[p + 'x'] * p1 + t[p + 'x'] * p2 + v.y * e[p + 'size'],
+      s[p + 'y'] * p1 + t[p + 'y'] * p2 - v.x * e[p + 'size'],
+      t[p + 'x'] * p1 + s[p + 'x'] * p2 + v.y * e[p + 'size'],
+      t[p + 'y'] * p1 + s[p + 'y'] * p2 - v.x * e[p + 'size'],
+      t[p + 'x'] + v.y * t[p + 'size'],
+      t[p + 'y'] - v.x * t[p + 'size']
+    );
+    ctx.lineTo(
+      t[p + 'x'] - v.y * t[p + 'size'],
+      t[p + 'y'] + v.x * t[p + 'size']
+    );
+    ctx.bezierCurveTo(
+      t[p + 'x'] * p1 + s[p + 'x'] * p2 - v.y * e[p + 'size'],
+      t[p + 'y'] * p1 + s[p + 'y'] * p2 + v.x * e[p + 'size'],
+      s[p + 'x'] * p1 + t[p + 'x'] * p2 - v.y * e[p + 'size'],
+      s[p + 'y'] * p1 + t[p + 'y'] * p2 + v.x * e[p + 'size'],
+      s[p + 'x'] - v.y * s[p + 'size'],
+      s[p + 'y'] + v.x * s[p + 'size']
+    );
+    ctx.closePath();
+    ctx.fill();
+  };
+
+  sigma.canvas.nodes.goo = function(node, ctx, settings) {
+    var prefix = settings('prefix') || '';
+        //color = 'red';
+    
+
+    ctx.beginPath();
+    ctx.arc(
+      node[prefix + 'x'],
+      node[prefix + 'y'],
+      node[prefix + 'size'],
+      0,
+      Math.PI * 2,
+      true
+    );
+    ctx.closePath();
+    ctx.fill();
+    //ctx.fillStyle = node.color ;
+    //ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(
+      node[prefix + 'x'],
+      node[prefix + 'y'],
+      node[prefix + 'size'] * 0.5,
+      0,
+      Math.PI * 2,
+      true
+    );
+    ctx.closePath();
+    ctx.fill();
+  };
+
+
+
+
+  /**
+   * INITIALIZATION SCRIPT:
+   * **********************
+   */
+  s = new sigma({
+    renderer: {
+      container: document.getElementById('graph-container'),
+      type: 'canvas'
+    },
+    settings: {
+      doubleClickEnabled: false,
+      autoRescale: false,
+      mouseEnabled: true,
+      touchEnabled: false,
+      nodesPowRatio: 1,
+      edgesPowRatio: 1,
+      drawLabels: false,
+      singleHover: true,
+    }
+  });
+  generate = document.querySelector('#button');
+  dom = document.querySelector('#graph-container canvas:last-child');
+  c = s.camera;
+/*  var button1 = document.createElement("li");
+                button1.id = "red";
+  var button2 = document.createElement("li");
+                  button2.innerHTML = "";
+  var button3 = document.createElement("li");
+                  button3.innerHTML = "";
+  var button4 = document.createElement("li");
+                  button4.innerHTML = "";
+  var button5 = document.createElement("li");
+                  button5.innerHTML = "";
+  var button6 = document.createElement("li");
+                  button6.innerHTML = "";
+  var body = document.getElementsByClassName("colors")[0];
+             body.appendChild(button1);
+             body.appendChild(button2);
+             body.appendChild(button3);
+             body.appendChild(button4);
+             body.appendChild(button5);
+             body.appendChild(button6);
+  // Initialize graph:
+  /*s.graph.read({
+    nodes: [
+      {
+        id: (++nId) + '',
+        size: nodeRadius,
+        x: 0,
+        y: -80,
+        dX: 0,
+        dY: 0,
+        type: 'goo'
+      },
+      {
+        id: (++nId) + '',
+        size: nodeRadius,
+        x: 10,
+        y: -100,
+        dX: 0,
+        dY: 0,
+        type: 'goo'
+      },
+      {
+        id: (++nId) + '',
+        size: nodeRadius,
+        x: 20,
+        y: -80,
+        dX: 0,
+        dY: 0,
+        type: 'goo'
+      }
+    ],
+    edges: [
+      {
+        id: (++eId) + '',
+        source: '1',
+        target: '2',
+        type: 'goo'
+      },
+      {
+        id: (++eId) + '',
+        source: '1',
+        target: '3',
+        type: 'goo'
+      },
+      {
+        id: (++eId) + '',
+        source: '2',
+        target: '3',
+        type: 'goo'
+      }
+    ]
+  });*/
+
+  function frame() {
+    s.refresh();
+
+    if (s.graph.nodes().length) {
+      var w = dom.offsetWidth,
+          h = dom.offsetHeight;
+
+      // The "rescale" middleware modifies the position of the nodes, but we
+      // need here the camera to deal with this. Here is the code:
+      var xMin = Infinity,
+          xMax = -Infinity,
+          yMin = Infinity,
+          yMax = -Infinity,
+          margin = 50,
+          scale;
+
+      s.graph.nodes().forEach(function(n) {
+        xMin = Math.min(n.x, xMin);
+        xMax = Math.max(n.x, xMax);
+        yMin = Math.min(n.y, yMin);
+        yMax = Math.max(n.y, yMax);
+      });
+
+      xMax += margin;
+      xMin -= margin;
+      yMax += margin;
+      yMin -= margin;
+
+      scale = Math.min(
+        w / Math.max(xMax - xMin, 1),
+        h / Math.max(yMax - yMin, 1)
+      );
+
+      /*c.goTo({
+        x: (xMin + xMax) / 2,
+        y: (yMin + yMax) / 2,
+        ratio: 1 / scale
+      });*/
+
+      
+
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  frame();
+
+
+
+
+  /**
+   * EVENTS BINDING:
+   * ***************
+   */
+  document.getElementById("generate").addEventListener("click",function(){
+    var train = {
+      training : document.getElementById("InputTrainingId").value,
+      test : 100 - document.getElementById("InputTrainingId").value
+    }
+    console.log(train);
+    if(train.training == 0){
+      alert("O treinamento não pode ser 0")
+    }else if(count_class.length < 2){
+      alert("É necessário escolher pelo menos duas cores" + n_classes)
+    }else if(count_class.includes(1)){
+      alert("Cada classe precisa de pelo menos 2 elementos" + count_class);
+    }else{
+      socket.emit('generate',train);
+      setTimeout(function(){
+      document.getElementById("see-results").style.display = "block";
+      document.getElementById("generate").style.visibility = 'hidden';}, 5000)
+    }
+  });
+  document.getElementById("see-results").addEventListener("click",function(){
+    document.getElementById("question").style.visibility = 'hidden';
+    document.getElementById("see-results").style.visibility = 'hidden';
+    document.getElementById("InputTrainingId").style.visibility = 'hidden';
+    document.getElementById("OutputTrainingId").style.visibility = 'hidden';
+    document.getElementById("btn-group").style.visibility = 'visible';
+    socket.emit ('json');
+    socket.on ('json-response', function (json_sample,training_sample, testing_sample,testing_out,training_out,array_colors, accuracy) {
+    document.getElementById("Title").innerHTML =  "Accuracy = " +accuracy;
+    s.graph.clear();
+    var inc = 0;
+    while( inc < testing_sample.length){
+      s.graph.addNode({
+        id: testing_sample[inc].id,
+        label : testing_sample[inc].label,
+        size: nodeRadius,
+        x: testing_sample[inc].x,
+        y: testing_sample[inc].y,
+        dX: 0,
+        dY: 0,
+        color: array_colors[testing_out[inc]],
+      })
+      inc++
+    }
+    var inc = 0;
+    while( inc < training_sample.length){
+      s.graph.addNode({
+        id: training_sample[inc].id,
+        label : training_sample[inc].label,
+        size: nodeRadius,
+        x: training_sample[inc].x,
+        y: training_sample[inc].y,
+        dX: 0,
+        dY: 0,
+        color : array_colors[training_out[inc]]
+      })
+      inc++
+    }
+        //console.log(training_sample)
+        spaceMode = true;     // Flag que não permite o usuário pintar a tela quando true
+        document.getElementById("btn1").addEventListener("click",function(){
+          if(document.getElementById("btn1").checked && !document.getElementById("btn2").checked){
+            //Training checked & Testing not checked
+            s.graph.clear();
+            var inc = 0;
+            while( inc < training_sample.length){
+              s.graph.addNode({
+                id: training_sample[inc].id,
+                label : training_sample[inc].label,
+                size: nodeRadius,
+                x: training_sample[inc].x,
+                y: training_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[training_out[inc]],
+              })
+              inc++
+            }
+          }else if(document.getElementById("btn1").checked && document.getElementById("btn2").checked){
+            //Training & Testing  checked
+            s.graph.clear();
+            var inc = 0;
+            while( inc < testing_sample.length){
+              s.graph.addNode({
+                id: testing_sample[inc].id,
+                label : testing_sample[inc].label,
+                size: nodeRadius,
+                x: testing_sample[inc].x,
+                y: testing_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[testing_out[inc]],
+              })
+              inc++
+            }
+            var inc = 0;
+            while( inc < training_sample.length){
+              s.graph.addNode({
+                id: training_sample[inc].id,
+                label : training_sample[inc].label,
+                size: nodeRadius,
+                x: training_sample[inc].x,
+                y: training_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[training_out[inc]],
+              })
+              inc++
+            }
+          }else if(!document.getElementById("btn1").checked && document.getElementById("btn2").checked) {
+            //Training not checked & Testing checked
+            s.graph.clear();
+            var inc = 0;
+            while( inc < testing_sample.length){
+              s.graph.addNode({
+                id: testing_sample[inc].id,
+                label : testing_sample[inc].label,
+                size: nodeRadius,
+                x: testing_sample[inc].x,
+                y: testing_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[testing_out[inc]],
+              })
+              inc++
+            }
+          }else{
+            //Training not checked & Testing not checked
+            s.graph.clear();
+          }
+        });
+      document.getElementById("btn2").addEventListener("click",function(){
+          if(document.getElementById("btn2").checked && !document.getElementById("btn1").checked){
+            //Training not checked & Testing  checked
+            s.graph.clear();
+            var inc = 0;
+            while( inc < testing_sample.length){
+              s.graph.addNode({
+                id: testing_sample[inc].id,
+                label : testing_sample[inc].label,
+                size: nodeRadius,
+                x: testing_sample[inc].x,
+                y: testing_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[testing_out[inc]],
+              })
+              inc++
+            }
+          }else if(document.getElementById("btn2").checked && document.getElementById("btn1").checked){
+            //Training checked & Testing checked
+            s.graph.clear();
+            var inc = 0;
+            while( inc < testing_sample.length){
+              s.graph.addNode({
+                id: testing_sample[inc].id,
+                label : testing_sample[inc].label,
+                size: nodeRadius,
+                x: testing_sample[inc].x,
+                y: testing_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[testing_out[inc]],
+              })
+              inc++
+            }
+            var inc = 0;
+            while( inc < training_sample.length){
+              s.graph.addNode({
+                id: training_sample[inc].id,
+                label : training_sample[inc].label,
+                size: nodeRadius,
+                x: training_sample[inc].x,
+                y: training_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[training_out[inc]],
+              })
+              inc++
+            }
+          }else if(!document.getElementById("btn2").checked && document.getElementById("btn1").checked){
+            //Training checked & Testing not checked
+            s.graph.clear();
+            var inc = 0;
+            while( inc < training_sample.length){
+              s.graph.addNode({
+                id: training_sample[inc].id,
+                label : training_sample[inc].label,
+                size: nodeRadius,
+                x: training_sample[inc].x,
+                y: training_sample[inc].y,
+                dX: 0,
+                dY: 0,
+                color: array_colors[training_out[inc]],
+              })
+              inc++
+            }
+          } else{
+            //Training not checked & Testing not checked
+            s.graph.clear();
+          }
+        });
+    });
+  });
+  
+  dom.addEventListener('click', function(e) {
+    // Find neighbors:
+    var x,
+        y,
+        p,
+        id,
+        label,
+        neighbors;
+       var colors = document.getElementsByName('radio');  
+
+    var color;
+    for (var i = 0; i < colors.length; i++) {
+        if (colors[i].type === "radio" && colors[i].checked) {
+            color = colors[i].value;
+        }
+    }
+
+    x = sigma.utils.getX(e) - dom.offsetWidth / 2;
+    y = sigma.utils.getY(e) - dom.offsetHeight / 2;
+    p = c.cameraPosition(x, y);
+    x = p.x;
+    y = p.y;
+
+    /*neighbors = s.graph.nodes().filter(function(n) {
+      return (Math.sqrt(
+        Math.pow(n.x - x, 2) +
+        Math.pow(n.y - y, 2)
+      ) - n.size) < radius;
+    });*/
+
+    if (!spaceMode)
+      s.graph.addNode({
+        id: (id = (++nId) + ''),
+        label: 'Node ' + (nId),
+        size: nodeRadius,
+        x: x ,
+        y: y ,
+        dX: 0,
+        dY: 0,
+        color: color,
+      })
+      var data = {		//um variavel para guardar as coordenadas quando o mouse é arrastado
+          id: (id = (nId) + ''),
+          label: 'Node ' + (nId),
+          size: nodeRadius,
+					x : x,
+					y : y,
+          dX: 0,
+          dY: 0,
+					color : color
+				}
+        if(!array_color.includes(color)){
+          array_color[array_color.length] = color;
+          n_classes = n_classes + 1 ;
+          count_class[count_class.length] = 1;
+        }else{
+          var index = array_color.indexOf(color);
+          count_class[index] = 2;
+        }
+        socket.emit('mouse',data);
+        ;
+
+    
+  }, false);
+  dom.addEventListener('mousemove', function(e) {
+    mouseX = sigma.utils.getX(e);
+    mouseY = sigma.utils.getY(e);
+  }, false);
+  dom.addEventListener('DOMMouseScroll', function(e) {
+    radius *= sigma.utils.getDelta(e) < 0 ? 1 / wheelRatio : wheelRatio;
+  }, false);
+  dom.addEventListener('mousewheel', function(e) {
+    radius *= sigma.utils.getDelta(e) < 0 ? 1 / wheelRatio : wheelRatio;
+  }, false);
+  document.addEventListener('keydown', function(e) {
+    spaceMode = (e.which == 32) ? true : spaceMode;
+  });
+  document.addEventListener('keyup', function(e) {
+    spaceMode = e.which == 32 ? false : spaceMode;
+  });
+})();
+</script>
+
+</body>
+</html>
