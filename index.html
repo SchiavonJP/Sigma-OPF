@@ -440,10 +440,11 @@
       alert("Cada classe precisa de pelo menos 2 elementos" + count_class);
     }else{
       socket.emit('generate',train);
-      setTimeout(function(){
-      document.getElementById("see-results").style.display = "block";
-      document.getElementById("generate").style.visibility = 'hidden';}, 5000)
     }
+  });
+  socket.on('accuracy', function(){
+      document.getElementById("see-results").style.display = "block";
+      document.getElementById("generate").style.visibility = 'hidden';
   });
   document.getElementById("see-results").addEventListener("click",function(){
     document.getElementById("question").style.visibility = 'hidden';
@@ -453,6 +454,7 @@
     document.getElementById("btn-group").style.visibility = 'visible';
     socket.emit ('json');
     socket.on ('json-response', function (json_sample,training_sample, testing_sample,testing_out,training_out,array_colors, accuracy) {
+    console.log("acc"+accuracy)
     document.getElementById("Title").innerHTML =  "Accuracy = " +accuracy;
     s.graph.clear();
     var inc = 0;

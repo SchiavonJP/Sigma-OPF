@@ -62,7 +62,7 @@ function newConnection(socket) {				//funcao para quando há uma nova conexão
 		socket.on ('json', function (){				//Socket que manda jsons formatados para pintar na tela de visualizacao
 				socket.emit ('json-response', sample_json, training_sample,testing_sample,testing_out, training_out,array_colors,accuracy);
 		});
-		
+
 		if (!Array.prototype.includes) {		//prototipo de funcao para verificar se um elemento pertence a um array
 		Object.defineProperty(Array.prototype, 'includes', {
 			value: function(searchElement, fromIndex) {
@@ -310,7 +310,8 @@ function newConnection(socket) {				//funcao para quando há uma nova conexão
 
 							lr.on('end', function () {
 								//console.log("Ok we're done - exiting now.");
-								console.log(accuracy)
+								//console.log(accuracy)
+								socket.emit('accuracy')
 							});
 						});
 			}
